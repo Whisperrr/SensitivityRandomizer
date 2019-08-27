@@ -9,7 +9,7 @@ This tool generates smooth, randomized sensitivity multiplier curves around a ba
 
 ## Instructions
 
-#### *1) Download the program*
+### *1) Download the program*
 
 * Clicking the download link below will give you access to **_all_** the files needed to successfully run this tool.
 
@@ -19,7 +19,7 @@ This tool generates smooth, randomized sensitivity multiplier curves around a ba
 * You may also download the *SensitivityRandomizer.zip* file directly from my [releases](https://github.com/Whisperrr/SensitivityChanger/releases).  
 * Or clone/download the repo from my [GitHub](https://github.com/Whisperrr/SensitivityChanger).
 
-#### *2) Install Interception*
+### *2) Install Interception*
 
 Once you extract the ZIP file, you must first install Interception. More on what that is in the _Details_ section if you care.
 
@@ -31,7 +31,7 @@ The process is _very_ similar to Kovaak and Povohat's [InterAccel](http://mousea
 
 Once this is done, you should be able to run the tool.
 
-#### *3) Run the program*
+### *3) Run the program*
 
 * Run the **_SensitivityRandomizer.exe_** file located in your extracted ZIP folder.
 
