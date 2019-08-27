@@ -1,6 +1,6 @@
 # Smooth Sensitivity Randomizer
 
-**By: Whisper & El lBad**
+**By: Whisper & El Bad**
 
 
 ## Overview
