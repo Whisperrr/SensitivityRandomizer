@@ -1,6 +1,9 @@
 <center>
+
 # Smooth Sensitivity Randomizer
+
 **By: Whisper & El lBad**
+
 </center>
 
 ## Overview
