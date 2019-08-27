@@ -54,7 +54,7 @@ _Spread_ determines how crazy you want your curve to look. Small spread values r
 
 *Iterations* effectively determines how "long" you want your program to run for before you need to restart. I keep this value at **5000**, and this usually results in around 20-30 minutes before needing to restart.
 
-*Debug* lets you see a live value of your current sensitivity multiplier and a live percentage of time left before needing to restart. By default this is set to 1, however if you're experiencing any performance issues, I'd recommend setting this to 0.
+*Debug* lets you see a live value of your current sensitivity multiplier and a live percentage of time left before needing to restart. By default this is set to **1**, however if you're experiencing any performance issues, I'd recommend setting this to 0.
 
 ## Details
 
