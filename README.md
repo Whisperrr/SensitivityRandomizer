@@ -58,6 +58,10 @@ _Spread_ determines how crazy you want your curve to look. Small spread values r
 
 *Debug* lets you see a live value of your current sensitivity multiplier and a live percentage of time left before needing to restart. By default this is set to **1**, however if you're experiencing any performance issues, I'd recommend setting this to 0.
 
+***
+
+Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggle). It's sort of finicky though, and requires you to stop moving your mouse before pressing. With the "Debug" option set to 1, you'll be able to see a _PAUSE_ icon appear.
+
 ## Details
 
 If you'd like to know more about how the program actually works, please see [this Reddit post](https://www.reddit.com/r/FPSAimTrainer/comments/cve6oi/tool_for_smoothly_randomizing_sensitivity/) where I describe exactly that! If you have any issues running the program, you join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM) and message **Whisper#4442** or **El Bad#5788**.
