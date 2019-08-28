@@ -288,7 +288,6 @@ int main()
 					if (passage > x_vals[i])
 					{
 						if (paused) {
-							sens_multiplier = DEFAULT_SENS; 
 							lastpress = GetTickCount64();
 						}
 						else {

@@ -60,7 +60,7 @@ _Spread_ determines how crazy you want your curve to look. Small spread values r
 
 ***
 
-Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggle). It's sort of finicky though, and requires you to stop moving your mouse before pressing. With the "Debug" option set to 1, you'll be able to see a _PAUSE_ icon appear.
+Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggle). So if you find a particular sensitivity you like (or hate for that matter), you can now pause to practice it for a while. It's sort of finicky though, and requires you to stop moving your mouse before pressing. With the "Debug" option set to 1, you'll be able to see a _PAUSE_ icon appear.
 
 ## Details
 
