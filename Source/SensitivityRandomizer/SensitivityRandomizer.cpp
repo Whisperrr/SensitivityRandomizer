@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <math.h>
 #include <fstream>
 #include <windows.h>
 #include <armadillo>
@@ -17,7 +18,7 @@ using namespace arma;
 
 enum ScanCode
 {
-	SCANCODE_ESC = 0x01
+	SCANCODE_P = 0x19
 };
 
 COORD coord;
@@ -27,22 +28,23 @@ int
 	ITERATIONS = 5000;  // Set effective "length" the program will run for
 
 double
-	MAX_SENS = 2,    // maximum allowed sensitivity
-	MIN_SENS = 0.5, // minimum allowed sensitivity
+	MAX_SENS = 4,    // maximum allowed sensitivity
+	MIN_SENS = 0.25, // minimum allowed sensitivity
 
 	SENS_MEAN = 1.0,  // initial mean value of sensitivity distribution
-	SENS_SPREAD = 0.65, // initial standard deviation of sensitivity distribution
+	SENS_SPREAD = 0.3, // initial standard deviation of sensitivity distribution
+	SENS_SKEW = 0.0, 
 	TIMESTEP_MEAN = 1,    // initial mean value of timestep distribution
 	TIMESTEP_STDDEV = 0.1,  // initial standard deviation of timestep distribution
 
-	GAUSSIAN_WINDOW_SIZE = 5000, // size of the smoothing window
+	GAUSSIAN_WINDOW_SIZE = 1000, // size of the smoothing window
 	GAUSSIAN_STDDEV = 1000; // standard deviation of the smoothing window
 
 bool DEBUG = 1;
 
 double DEFAULT_SENS = SENS_MEAN;
 
-auto generateSensitivities() 
+auto generateSensitivities()
 {
 
 	//=========================================// 
@@ -79,15 +81,15 @@ auto generateSensitivities()
 	std::printf("Attempting to open settings file...\n");
 
 	double variableValue;
-	
+
 	char variableName[100];
 	variableName[0] = '\0';
 
 	bool garbageFile = 0;
 
 	//=========================================// 
-    //  Read in values from settings.ini file  //
-    //=========================================//
+	//  Read in values from settings.ini file  //
+	//=========================================//
 
 	FILE* fp;
 
@@ -105,17 +107,48 @@ auto generateSensitivities()
 			else if (strcmp(variableName, "Min_Sensitivity") == 0) { MIN_SENS = variableValue; }
 			else if (strcmp(variableName, "Max_Sensitivity") == 0) { MAX_SENS = variableValue; }
 			else if (strcmp(variableName, "Spread") == 0) { SENS_SPREAD = variableValue; }
+			else if (strcmp(variableName, "Skew") == 0) { SENS_SKEW = variableValue; }
 			else if (strcmp(variableName, "Iterations") == 0) { ITERATIONS = variableValue; }
 			else if (strcmp(variableName, "Debug") == 0) { DEBUG = variableValue; }
-			else { garbageFile = 1; }
 		}
 		fclose(fp);
 	}
 
+	if ((SENS_MEAN < MIN_SENS) || (SENS_MEAN > MAX_SENS)) {
+		MIN_SENS = SENS_MEAN / 2.0;
+		MAX_SENS = SENS_MEAN * 2.0;
+		SetConsoleTextAttribute(hConsole, 0x04);
+		std::printf("Min or max out of range. Correcting automatically...\n");
+		SetConsoleTextAttribute(hConsole, 0x08);
+		garbageFile = 1;
+	}
+	if ((SENS_MEAN + SENS_SKEW < MIN_SENS) || (SENS_MEAN + SENS_SKEW > MAX_SENS)) {
+		if (SENS_SKEW < 0) { 
+			SENS_SKEW = MIN_SENS - SENS_MEAN;
+			SetConsoleTextAttribute(hConsole, 0x04);
+			std::printf("Skew value to small. Smallest skew value with your settings is: %f.\nCorrecting automatically...\n", SENS_SKEW);
+			SetConsoleTextAttribute(hConsole, 0x08);
+		}
+		else { 
+			SENS_SKEW = MAX_SENS - SENS_MEAN; 
+			std::printf("\nSkew value too large. Largest skew value with your settings is %f.\nCorrecting automatically...\n:", SENS_SKEW);
+			SetConsoleTextAttribute(hConsole, 0x08);
+		}
+		garbageFile = 1;
+	}
+
+	if (!garbageFile) {
+		SetConsoleTextAttribute(hConsole, 0x02);
+		printf("\nSettings file valid.\n\n");
+		SetConsoleTextAttribute(hConsole, 0x08);
+	}
+
+	if (SENS_SPREAD == 0) { SENS_SPREAD = 0.0000001;  }
+	
 	std::printf("\nYour settings are:\n");
 
 	SetConsoleTextAttribute(hConsole, 0x02);
-	std::printf("Base Sensitivity: %.2f\nMin Sensitivity Multiplier: %.2f\nMax Sensitivity Multiplier: %.2f\nSpread: %.2f\nIterations: %d\nDebug: %d\n\n", SENS_MEAN, MIN_SENS, MAX_SENS, SENS_SPREAD, ITERATIONS, DEBUG);
+	std::printf("Base Sensitivity: %.2f\nMin Sensitivity Multiplier: %.2f\nMax Sensitivity Multiplier: %.2f\nSpread: %.2f\nSkew: %.2f\nIterations: %d\nDebug: %d\n\n", SENS_MEAN, MIN_SENS, MAX_SENS, SENS_SPREAD, SENS_SKEW, ITERATIONS, DEBUG);
 	SetConsoleTextAttribute(hConsole, 0x08);
 
 	SetConsoleTextAttribute(hConsole, 0x4f);
@@ -123,11 +156,11 @@ auto generateSensitivities()
 	SetConsoleTextAttribute(hConsole, 0x08);
 
 	coord.X = 0;
-	coord.Y = 15;
+	coord.Y = 20;
 	SetConsoleCursorPosition(hConsole, coord);
 	SetConsoleTextAttribute(hConsole, 0x08);
 
-	std::printf("\nGenerating Sensitivity Curve...");
+	std::printf("Generating Sensitivity Curve...");
 
 	//=========================================// 
     //        Begin smoothing algorithm        //
@@ -135,7 +168,8 @@ auto generateSensitivities()
 
 	double
 		random_sens,
-		random_timestep;
+		random_timestep,
+		d = SENS_SKEW / sqrt(1 + (SENS_SKEW * SENS_SKEW)); // skew factor 
 
 	vector<double> x_vals(ITERATIONS), y_vals(ITERATIONS);
 
@@ -148,20 +182,36 @@ auto generateSensitivities()
 	for (int i = 0; i < ITERATIONS; i++)
 	{
 		// Generate a normal distribution around the mean
-		gamma_distribution<double> sens_distribution(SENS_MEAN, SENS_SPREAD);
-		random_sens = sens_distribution(generator) + MIN_SENS;
+		normal_distribution<double> sens_distribution(SENS_MEAN, SENS_SPREAD);
+		
+		double r1 = sens_distribution(generator);
+		double r2 = sens_distribution(generator);
+		//random_sens = sens_distribution(generator);
+
+		random_sens = (d * r1) + (r2 * sqrt(1 - (d * d)));
+
+		if (r1 <= 0) { random_sens = -random_sens; }
+
 
 		// Ensure outputted sensitivities are within the bounds set by the user
-		if (random_sens > MAX_SENS)
+		if ((random_sens < MIN_SENS) || (random_sens > MAX_SENS))
 		{
 			// Iterate until a sensitivity within the range is achieved
 			do {
-				random_sens = sens_distribution(generator) + MIN_SENS;
-			} while (random_sens > MAX_SENS);
+				//normal_distribution<double> sens_distribution(SENS_MEAN, SENS_SPREAD);
+				r1 = sens_distribution(generator);
+				r2 = sens_distribution(generator);
+
+				random_sens = (d * r1) + (r2 * sqrt(1 - (d * d)));
+
+				if (r1 <= 0) { random_sens = -random_sens; };
+				//random_sens = sens_distribution(generator);
+				//cout << "HELLO: " << random_sens << endl;
+			} while ((random_sens < MIN_SENS) || (random_sens > MAX_SENS));
 		}
 
 		// Update the mean sensitivity to be the current random sensitivity
-		SENS_MEAN = random_sens;
+		if ((random_sens < MIN_SENS) || (random_sens > MAX_SENS)) { SENS_MEAN = random_sens; }
 
 
 		// Generate a random new timestep
@@ -194,7 +244,7 @@ auto generateSensitivities()
 	vec arma_y_vals(y_vals);
 
 	// Actual "interpolation" function to connect the points together
-	interp1(arma_x_vals, arma_y_vals, xx, yy);
+	arma::interp1(arma_x_vals, arma_y_vals, xx, yy);
 
 
 	// Begin second step in smoothing
@@ -213,8 +263,8 @@ auto generateSensitivities()
 
 	// Chop off artifacts from smoothing algorithm
 	// Smoothed curve is janky around beginning and ends
-	vector<double> t(timesteps.begin() + 2000, timesteps.end() - 2000);
-	vector<double> s(sensitivities.begin() + 2000, sensitivities.end() - 2000);
+	vector<double> t(timesteps.begin() + 2500, timesteps.end() - 2500);
+	vector<double> s(sensitivities.begin() + 2500, sensitivities.end() - 2500);
 
 	auto vals = make_tuple(t, s);
 
@@ -233,6 +283,7 @@ int main()
 	context = interception_create_context();
 
 	interception_set_filter(context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_MOVE);
+	interception_set_filter(context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_DOWN | INTERCEPTION_FILTER_KEY_UP);
 
 	int i = 0;
 
@@ -271,14 +322,9 @@ int main()
 			InterceptionMouseStroke& mstroke = *(InterceptionMouseStroke*)& stroke;
 
 			if (!(mstroke.flags & INTERCEPTION_MOUSE_MOVE_ABSOLUTE)) {
-	
-				if (((GetAsyncKeyState('P') & 1)) && (GetTickCount64() - lastpress > 1)) {
-					lastpress = GetTickCount64();
-					paused = !paused;
-				} 
 
 				coord.X = 0;
-				coord.Y = 15;
+				coord.Y = 19;
 
 				fsec fs = curr_time - prev_time;
 				passage = fs.count() * 1000.0;
@@ -287,13 +333,9 @@ int main()
 				{
 					if (passage > x_vals[i])
 					{
-						if (paused) {
-							lastpress = GetTickCount64();
-						}
-						else {
+						if (!paused) {
 							sens_multiplier = y_vals[i];
 							percent = double(i) / size * 100;
-							i++;
 						}
 
 						if (DEBUG == 1)
@@ -314,7 +356,7 @@ int main()
 
 							if (paused) {
 								coord.X = 20;
-								coord.Y = 14;
+								coord.Y = 18;
 								SetConsoleCursorPosition(hConsole, coord);
 								SetConsoleTextAttribute(hConsole, 0x20);
 								std::printf(" PAUSED ");
@@ -322,12 +364,13 @@ int main()
 							}
 							else {
 								coord.X = 20;
-								coord.Y = 14;
+								coord.Y = 18;
 								SetConsoleCursorPosition(hConsole, coord);
 								std::printf("        ");
 								SetConsoleTextAttribute(hConsole, 0x08);
 							}
 						}
+						i++;
 					}
 				}
 				else { break; }
@@ -346,7 +389,19 @@ int main()
 			curr_time = Time::now();
 		}
 
+		if (interception_is_keyboard(device))
+		{
+			InterceptionKeyStroke& kstroke = *(InterceptionKeyStroke*)& stroke;
+
+			interception_send(context, device, &stroke, 1);
+
+			if (kstroke.code == SCANCODE_P && (GetTickCount64() - lastpress > 1000)) {
+				lastpress = GetTickCount64();
+				paused = !paused;
+			}
+		}
 	}
+
 	SetConsoleTextAttribute(hConsole, 0x02);
 	std::printf("\nPlease restart the program to regenerate another smooth sensitivity curve.\n");
 	SetConsoleTextAttribute(hConsole, 0x08);
