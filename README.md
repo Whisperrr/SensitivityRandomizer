@@ -53,9 +53,9 @@ The *Baseline_Sensitivity* value determines determines where you'd like to vary 
 
 The *Min_Sensitivity* and *Max_Sensitivity* values determine the largest and smallest multipliers that you want your sensitivity to reach. I usually keep Min_Sensitivity = **0.25** (half your default sensitivity), and Max_Sensitivity = **4** (twice your default sensitivity).
 
-_Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.3**.
+_Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.6**.
 
-_Skew_ determines if you want to focus on sensitivities _closer_ to your Min_Sensitivity or your Max_Sensitivity. Negative values favor the Min_Sensitivity while positive values favor the Max_Sensitivity. By default, I have this set to **-0.4** as the generation naturally favors higher sensitivities (won't go into why here). Valid values are: *Min_Sensitivity - Baseline_Sensitivity <= Skew <= Max_Sensitivity + Baseline_Sensitivity*
+_Skew_ determines if you want to focus on sensitivities _closer_ to your Min_Sensitivity or your Max_Sensitivity. Negative values favor the Min_Sensitivity while positive values favor the Max_Sensitivity. By default, I have this set to **-0.3** as the generation naturally favors higher sensitivities (won't go into why here). Valid values are: *Min_Sensitivity - Baseline_Sensitivity <= Skew <= Max_Sensitivity + Baseline_Sensitivity*
 
 *Iterations* effectively determines how "long" you want your program to run for before you need to restart. I keep this value at **5000**, and this usually results in around 20-30 minutes before needing to restart.
 
