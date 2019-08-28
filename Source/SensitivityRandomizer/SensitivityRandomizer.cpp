@@ -23,24 +23,27 @@ enum ScanCode
 COORD coord;
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-bool DEBUG = 0;
+int
+	ITERATIONS = 5000;  // Set effective "length" the program will run for
+
+double
+	MAX_SENS = 2,    // maximum allowed sensitivity
+	MIN_SENS = 0.5, // minimum allowed sensitivity
+
+	SENS_MEAN = 1.0,  // initial mean value of sensitivity distribution
+	SENS_SPREAD = 0.65, // initial standard deviation of sensitivity distribution
+	TIMESTEP_MEAN = 1,    // initial mean value of timestep distribution
+	TIMESTEP_STDDEV = 0.1,  // initial standard deviation of timestep distribution
+
+	GAUSSIAN_WINDOW_SIZE = 5000, // size of the smoothing window
+	GAUSSIAN_STDDEV = 1000; // standard deviation of the smoothing window
+
+bool DEBUG = 1;
+
+double DEFAULT_SENS = SENS_MEAN;
 
 auto generateSensitivities() 
 {
-	int
-		ITERATIONS           = 5000;  // Set effective "length" the program will run for
-
-	double 
-		MAX_SENS             = 2,    // maximum allowed sensitivity
-		MIN_SENS             = 0.5, // minimum allowed sensitivity
-		 
-		SENS_MEAN            = 1.0,  // initial mean value of sensitivity distribution
-		SENS_SPREAD          = 0.65, // initial standard deviation of sensitivity distribution
-		TIMESTEP_MEAN        = 1,    // initial mean value of timestep distribution
-		TIMESTEP_STDDEV      = 0.1,  // initial standard deviation of timestep distribution
-
-		GAUSSIAN_WINDOW_SIZE = 5000, // size of the smoothing window
-		GAUSSIAN_STDDEV      = 1000; // standard deviation of the smoothing window
 
 	//=========================================// 
 	//	    Set up command line interface      //
@@ -70,10 +73,10 @@ auto generateSensitivities()
 	SetConsoleWindowInfo(hConsole, TRUE, &conSize);
 
 	SetConsoleTextAttribute(hConsole, 0x0f);
-	printf("Smoothed Randomized Sensitivity \n===============================\n\n");
+	std::printf("Smoothed Randomized Sensitivity \n===============================\n\n");
 	SetConsoleTextAttribute(hConsole, 0x08);
 
-	printf("Attempting to open settings file...\n");
+	std::printf("Attempting to open settings file...\n");
 
 	double variableValue;
 	
@@ -90,12 +93,12 @@ auto generateSensitivities()
 
 	if ((fp = fopen("settings.ini", "r+")) == NULL) {
 		SetConsoleTextAttribute(hConsole, 0x04);
-		printf("Cannot read from settings file. Using defaults.\n");
+		std::printf("Cannot read from settings file. Using defaults.\n");
 		SetConsoleTextAttribute(hConsole, 0x08);
 	}
 	else {
 
-		printf("Settings file found! Reading values.\n");
+		std::printf("Settings file found! Reading values.\n");
 		for (int i = 0; i < 99 && fscanf(fp, "%s = %lf", &variableName, &variableValue) != EOF; i++) {
 
 			if (strcmp(variableName, "Baseline_Sensitivity") == 0) { SENS_MEAN = variableValue; }
@@ -109,14 +112,14 @@ auto generateSensitivities()
 		fclose(fp);
 	}
 
-	printf("\nYour settings are:\n");
+	std::printf("\nYour settings are:\n");
 
 	SetConsoleTextAttribute(hConsole, 0x02);
-	printf("Base Sensitivity: %.2f\nMin Sensitivity Multiplier: %.2f\nMax Sensitivity Multiplier: %.2f\nSpread: %.2f\nIterations: %d\nDebug: %d\n\n", SENS_MEAN, MIN_SENS, MAX_SENS, SENS_SPREAD, ITERATIONS, DEBUG);
+	std::printf("Base Sensitivity: %.2f\nMin Sensitivity Multiplier: %.2f\nMax Sensitivity Multiplier: %.2f\nSpread: %.2f\nIterations: %d\nDebug: %d\n\n", SENS_MEAN, MIN_SENS, MAX_SENS, SENS_SPREAD, ITERATIONS, DEBUG);
 	SetConsoleTextAttribute(hConsole, 0x08);
 
 	SetConsoleTextAttribute(hConsole, 0x4f);
-	printf(" [CTRL+C] to QUIT ");
+	std::printf(" [CTRL+C] to QUIT ");
 	SetConsoleTextAttribute(hConsole, 0x08);
 
 	coord.X = 0;
@@ -124,7 +127,7 @@ auto generateSensitivities()
 	SetConsoleCursorPosition(hConsole, coord);
 	SetConsoleTextAttribute(hConsole, 0x08);
 
-	printf("\nGenerating Sensitivity Curve...");
+	std::printf("\nGenerating Sensitivity Curve...");
 
 	//=========================================// 
     //        Begin smoothing algorithm        //
@@ -255,8 +258,11 @@ int main()
 
 	sens_multiplier = y_vals.front();
 
-	coord.X = 0;
-	coord.Y = 15;
+	static double percent;
+	static bool paused = false;
+	static DWORD lastpress = 0;
+
+	std::printf("\nRunning...\n");
 
 	while (interception_receive(context, device = interception_wait(context), &stroke, 1) > 0)
 	{
@@ -265,6 +271,14 @@ int main()
 			InterceptionMouseStroke& mstroke = *(InterceptionMouseStroke*)& stroke;
 
 			if (!(mstroke.flags & INTERCEPTION_MOUSE_MOVE_ABSOLUTE)) {
+	
+				if (((GetAsyncKeyState('P') & 1)) && (GetTickCount64() - lastpress > 1)) {
+					lastpress = GetTickCount64();
+					paused = !paused;
+				} 
+
+				coord.X = 0;
+				coord.Y = 15;
 
 				fsec fs = curr_time - prev_time;
 				passage = fs.count() * 1000.0;
@@ -272,34 +286,55 @@ int main()
 				if (i < x_vals.size())
 				{
 					if (passage > x_vals[i])
-					{	
-						sens_multiplier = y_vals[i];
+					{
+						if (paused) {
+							sens_multiplier = DEFAULT_SENS; 
+							lastpress = GetTickCount64();
+						}
+						else {
+							sens_multiplier = y_vals[i];
+							percent = double(i) / size * 100;
+							i++;
+						}
 
 						if (DEBUG == 1)
 						{
 							SetConsoleCursorPosition(hConsole, coord);
 							SetConsoleTextAttribute(hConsole, 0x08);
-							printf("\nCurrent Sensitivity Multiplier: ");
-							
-							SetConsoleTextAttribute(hConsole, 0xe0);
-							printf("%.5f\n", sens_multiplier);
-							SetConsoleTextAttribute(hConsole, 0x08);
-
-							double percent = double (i) / size * 100;
-
-							printf("Program Termination: ");
+							std::printf("\nCurrent Sensitivity Multiplier: ");
 
 							SetConsoleTextAttribute(hConsole, 0xe0);
-							printf("%.3f%%\n", percent);
+							std::printf("%.5f\n", sens_multiplier);
 							SetConsoleTextAttribute(hConsole, 0x08);
+
+							std::printf("Program Termination: ");
+
+							SetConsoleTextAttribute(hConsole, 0xe0);
+							std::printf("%.3f%%\n\n", percent);
+							SetConsoleTextAttribute(hConsole, 0x08);
+
+							if (paused) {
+								coord.X = 20;
+								coord.Y = 14;
+								SetConsoleCursorPosition(hConsole, coord);
+								SetConsoleTextAttribute(hConsole, 0x20);
+								std::printf(" PAUSED ");
+								SetConsoleTextAttribute(hConsole, 0x08);
+							}
+							else {
+								coord.X = 20;
+								coord.Y = 14;
+								SetConsoleCursorPosition(hConsole, coord);
+								std::printf("        ");
+								SetConsoleTextAttribute(hConsole, 0x08);
+							}
 						}
-						i++;
 					}
 				}
 				else { break; }
 
 				dx = mstroke.x * sens_multiplier + carryX;
-			    dy = mstroke.y * sens_multiplier + carryY;
+				dy = mstroke.y * sens_multiplier + carryY;
 
 				carryX = dx - floor(dx);
 				carryY = dy - floor(dy);
@@ -314,7 +349,7 @@ int main()
 
 	}
 	SetConsoleTextAttribute(hConsole, 0x02);
-	printf("\nPlease restart the program to regenerate another smooth sensitivity curve.\n");
+	std::printf("\nPlease restart the program to regenerate another smooth sensitivity curve.\n");
 	SetConsoleTextAttribute(hConsole, 0x08);
 
 	interception_destroy_context(context);
