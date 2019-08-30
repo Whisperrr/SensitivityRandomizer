@@ -57,7 +57,7 @@ The *Min_Sensitivity* and *Max_Sensitivity* values determine the largest and sma
 
 _Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.6**.
 
-_Skew_ determines if you want to focus on sensitivities _closer_ to your Min_Sensitivity or your Max_Sensitivity. Negative values favor the Min_Sensitivity while positive values favor the Max_Sensitivity. By default, I have this set to **-0.3** as the generation naturally favors higher sensitivities (won't go into why here). Valid values are: *Min_Sensitivity - Baseline_Sensitivity <= Skew <= Max_Sensitivity + Baseline_Sensitivity*
+_Skew_ determines if you want to focus on sensitivities _closer_ to your Min_Sensitivity or your Max_Sensitivity. Negative values favor the Min_Sensitivity while positive values favor the Max_Sensitivity. By default, I have this set to **-0.3** as the generation naturally favors higher sensitivities (won't go into why here). Valid values are: *Min_Sensitivity - Baseline_Sensitivity <= Skew <= Max_Sensitivity - Baseline_Sensitivity*
 
 _Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomization to be. The smoothing parameter can take on several values:
 
