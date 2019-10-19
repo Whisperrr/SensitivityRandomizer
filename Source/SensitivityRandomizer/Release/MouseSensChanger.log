@@ -1,0 +1,20 @@
+﻿  SensitivityRandomizer.cpp
+  WARNING: detected 'min' and/or 'max' macros and undefined them;
+  WARNING: you may wish to define NOMINMAX before including any windows header
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(103,68): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(104,63): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(178,16): warning C4244:  'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(178,16): warning C4244:         with
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(178,16): warning C4244:         [
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(178,16): warning C4244:             _Rep=std::chrono::system_clock::rep
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(178,16): warning C4244:         ]
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(166,3): warning C4101:  'random_sens': unreferenced local variable
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(244,53): warning C4244:  'argument': conversion from 'double' to 'const arma::uword', possible loss of data
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(278,21): warning C4018:  '<': signed/unsigned mismatch
+  utils.cpp
+C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\SensitivityRandomizer.cpp(426,31): warning C4244:  '=': conversion from 'ULONGLONG' to 'DWORD', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 987 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  MouseSensChanger.vcxproj -> C:\Users\Gamer\Desktop\Sensitivity\SensitivityRandomizer\Win32\Release\SensitivityRandomizer.exe

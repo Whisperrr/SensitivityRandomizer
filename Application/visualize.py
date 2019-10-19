@@ -9,16 +9,20 @@ def plot():
     try:
         with open('sens_list.txt') as fp:
             lims = [float(e) for e in fp.readline().strip().split(",")]
+            initial = [float(e) for e in fp.readline().strip().split(",")]
+
+            x_vals.append(initial[0])
+            y_vals.append(initial[1])
 
             for line in fp:
                 vals = [float(e) for e in line.strip().split(",")]
-                x_vals.append(vals[0])
+                x_vals.append(vals[0] + x_vals[-1])
                 y_vals.append(vals[1])
 
         plt.title("Smooth Sensitivity Randomization")
         plt.xlabel("Time (seconds)")
         plt.ylabel("Sensitivity Multiplier")
-        plt.ylim(lims[0], lims[1])
+        plt.ylim(lims[1], lims[2])
         plt.plot(x_vals, y_vals)
         plt.show()
     except FileNotFoundError:
