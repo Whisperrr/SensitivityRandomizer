@@ -15,7 +15,7 @@ Ideally, this is something to occasionally **_train_** with, but not to have act
 
 * Clicking the download link below will give you access to **_all_** the files needed to successfully run this tool.
 
-| [Download Here!](https://github.com/Whisperrr/SensitivityChanger/releases/download/v0.3/SensitivityRandomizer.zip)|     
+| [Download Here!](https://github.com/Whisperrr/SensitivityChanger/releases/download/v0.4/SensitivityRandomizer.zip)|     
 | ------------- |
 
 * You may also download the *SensitivityRandomizer.zip* file directly from my [releases](https://github.com/Whisperrr/SensitivityChanger/releases).  
