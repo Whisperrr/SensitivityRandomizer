@@ -96,11 +96,11 @@ Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggl
 
 Until a better solution can be found, I've created a [YouTube video](https://youtu.be/0Gg1Gep0CK8) that walks you through a fix for this issue. You can also follow the steps below:
 
-* Double-click SensitivityRandomizer.exe
-* Right-click the title bar 
-* Navigate to *Defaults*
-* Uncheck  *Quick Edit Mode*
-* Restart the program
+1. Double-click SensitivityRandomizer.exe
+2. Right-click the title bar at the top of the window (can be seen in the video)
+3. Navigate to *Defaults*
+4. Uncheck  *Quick Edit Mode*
+5. Restart the program
 
 ***
 ***
