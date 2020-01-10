@@ -5,7 +5,7 @@
 
 ## Overview
 
-This tool generates smooth, randomized sensitivity multiplier curves around a baseline value using [Interception](http://www.oblita.com/interception.html) and [Armadillo](http://arma.sourceforge.net/) in C++. The goal of this tool is to begin to understand the effects of varying mouse sensitivities while aim training.
+This tool generates smooth or step-like, randomized sensitivity multiplier curves around a baseline value using [Interception](http://www.oblita.com/interception.html) and [Armadillo](http://arma.sourceforge.net/) in C++. The goal of this tool is to begin to understand the effects of varying mouse sensitivities while aim training.
 
 Ideally, this is something to occasionally **_train_** with, but not to have active during actual gameplay. While there's no concrete proof to back this up, we feel smoothly varying sensitivity might increase reactivity and help train fine motor movements in a way that's superior to keeping with a single sensitivity. Thus, the target audience will be people who play aim trainers such as [Kovaak's FPS Aim Trainer](https://store.steampowered.com/app/824270/KovaaKs_FPS_Aim_Trainer/).
 
@@ -41,14 +41,22 @@ Once this is done, you should be able to run the tool.
 
 This program will look for a _settings.ini_ file that contains several key pieces of information. If no settings file is found, it will use default values I've chosen. These values are:
 
+* Smooth
 * Baseline_Sensitivity
 * Min_Sensitivity
 * Max_Sensitivity
 * Spread
 * Smoothing
+* Timestep
 * Runtime (minutes)
 * Visualize
 * Debug
+
+The *Smooth* value determines whether you want your generated sensitivities to be *step-like* or *smooth*. It takes on two values: **0** (step-like) or **1** (smooth). Setting Smooth = **1** will result in a sensitivity curve similar to this:
+![](./Source/SmoothGraph.png)
+
+whereas setting Smooth = **0** will result in something like this:
+![](./Source/StepGraph.png)
 
 The *Baseline_Sensitivity* value determines determines where you'd like to vary your sensitivity multiplier around. **This should almost always be set to 1**, as this means you'll vary your sensitivity around a value *1x* your current sensitivity value (aka still your current sensitivity).
 
@@ -56,7 +64,7 @@ The *Min_Sensitivity* and *Max_Sensitivity* values determine the largest and sma
 
 _Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.6**.
 
-_Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomization to be. The smoothing parameter can take on several values:
+_Smoothing_ (added in v0.3 and different to the *Smooth* value previously) determines, well, how smooth you'd like your randomization to be (given that you choose a *smooth* graph rather than *step-like*). The smoothing parameter can take on several values:
 
 * 0: No smoothing performed (interesting option to say the least)
 * 1: Low amount of smoothing
@@ -66,6 +74,8 @@ _Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomi
 * 5: This smooth: https://www.youtube.com/watch?v=ZMByI4s-D-Y
 
 I have this value set to **2** by default.
+
+*Timestep* (added in v0.5) allows you to control how **often** your sensitivity changes when using the step-like sensitivity randomization option. By default, I have this set to **10**, meaning your sensitivity will change once every *ten* seconds.
 
 *Runtime (minutes)* - Determines how long you want your program to run for before you need to restart. I keep this value at **30** (for 30 minutes).
 
@@ -82,5 +92,5 @@ Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggl
 ## Details
 
 If you'd like to know more about how the program actually works, please see [this Reddit post](https://www.reddit.com/r/FPSAimTrainer/comments/cve6oi/tool_for_smoothly_randomizing_sensitivity/) where I describe exactly that! If you have any issues running the program, you can:
-* message **Whisper#4442** or **El Bad#5788** on Discord
-* join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM)
+* Message **Whisper#4442** or **El Bad#5788** on Discord.
+* Join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM).
