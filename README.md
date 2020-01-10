@@ -93,14 +93,14 @@ Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggl
 
 ***
 
-## Fix for Mouse Freeze Issue
+## Fix for Mouse Freeze Issue (Disable QuickEdit Mode in Console)
 
 Until a better solution can be found, I've created a [YouTube video](https://youtu.be/0Gg1Gep0CK8) that walks you through a fix for this issue. You can also follow the steps below:
 
 1. Double-click SensitivityRandomizer.exe
 2. Right-click the title bar at the top of the window (can be seen in the video)
 3. Navigate to *Defaults*
-4. Uncheck  *Quick Edit Mode*
+4. Uncheck  *QuickEdit Mode*
 5. Restart the program
 
 ***
