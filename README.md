@@ -1,4 +1,4 @@
-# Smooth Sensitivity Randomizer
+# Sensitivity Randomizer
 
 **By: Whisper & El Bad**
 
