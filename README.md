@@ -2,8 +2,6 @@
 
 **By: Whisper & El Bad**
 
-**Note** - Known issue: If you get click *within* the Sensitivity Randomizer window when open, this can freeze your mouse until a manual restart. A fix for this issue can be found in [Section 4](###Fix for mouse freeze)
-
 ## Overview
 
 This tool generates smooth or step-like, randomized sensitivity multiplier curves around a baseline value using [Interception](http://www.oblita.com/interception.html) and [Armadillo](http://arma.sourceforge.net/) in C++. The goal of this tool is to begin to understand the effects of varying mouse sensitivities while aim training.
