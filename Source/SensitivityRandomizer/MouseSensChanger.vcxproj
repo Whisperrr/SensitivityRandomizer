@@ -172,9 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\include\armadillo" />
+    <None Include="Libraries\include\armadillo" />
     <None Include="Libraries\x64\interception.dll" />
     <None Include="Libraries\x86\interception.dll" />
     <None Include="settings.ini" />
+    <None Include="Win32\Release\interception.dll" />
+    <None Include="Win32\Release\settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\x64\interception.lib" />
