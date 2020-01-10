@@ -203,7 +203,6 @@ auto generateSensitivities()
 			// Iterate until a sensitivity within the range is achieved
 			do {
 				random_sens = sens_distribution(generator);
-
 			} while ((random_sens < MIN_SENS) || (random_sens > MAX_SENS));
 		}
 
@@ -301,7 +300,7 @@ int main()
 
 	DWORD prev_mode;
 	GetConsoleMode(hConsole, &prev_mode);
-	SetConsoleMode(hConsole, prev_mode | ENABLE_EXTENDED_FLAGS);
+	SetConsoleMode(hConsole, prev_mode & ~ENABLE_QUICK_EDIT_MODE);
 
 	raise_process_priority();
 
