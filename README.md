@@ -90,7 +90,9 @@ I have this value set to **2** by default.
 
 Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggle). So if you find a particular sensitivity you like (or hate for that matter), you can now pause to practice it for a while. It's sort of finicky though, and requires you to stop moving your mouse before pressing. With the "Debug" option set to 1, you'll be able to see a _PAUSE_ icon appear.
 
-### Fix for Mouse Freeze Issue
+***
+
+## Fix for Mouse Freeze Issue
 
 Until a better solution can be found, I've created a [YouTube video](https://youtu.be/0Gg1Gep0CK8) that walks you through a fix for this issue. You can also follow the steps below:
 
@@ -100,6 +102,8 @@ Until a better solution can be found, I've created a [YouTube video](https://you
 * Uncheck  *Quick Edit Mode*
 * Restart the program
 
+***
+***
 
 ## Details
 
