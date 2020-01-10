@@ -72,7 +72,7 @@ _Smoothing_ (added in v0.3 and different to the *Smooth* value previously) deter
 * 2: Medium amount of smoothing
 * 3: High amount of smoothing
 * 4: Very high amount of smoothing
-* 5: This smooth: https://www.youtube.com/watch?v=ZMByI4s-D-Y
+* 5: [This smooth](https://www.youtube.com/watch?v=ZMByI4s-D-Y)
 
 I have this value set to **2** by default.
 
