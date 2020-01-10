@@ -81,5 +81,7 @@ Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggl
 
 ## Details
 
-If you'd like to know more about how the program actually works, please see [this Reddit post](https://www.reddit.com/r/FPSAimTrainer/comments/cve6oi/tool_for_smoothly_randomizing_sensitivity/) where I describe exactly that! If you have any issues running the program, you join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM) \
-and message **Whisper#4442** or **El Bad#5788**.
+If you'd like to know more about how the program actually works, please see [this Reddit post](https://www.reddit.com/r/FPSAimTrainer/comments/cve6oi/tool_for_smoothly_randomizing_sensitivity/) where I describe exactly that! If you have any issues running the program, you join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM) and message:
+* **Whisper#4442** 
+or 
+* **El Bad#5788**
