@@ -2,6 +2,7 @@
 
 **By: Whisper & El Bad**
 
+**Note** - Known issue: If you get click *within* the Sensitivity Randomizer window when open, this can freeze your mouse until a manual restart. A fix for this issue can be found   
 
 ## Overview
 
@@ -88,6 +89,9 @@ I have this value set to **2** by default.
 ***
 
 Also, you can press __"P"__ on your keyboard to pause/unpause the program (toggle). So if you find a particular sensitivity you like (or hate for that matter), you can now pause to practice it for a while. It's sort of finicky though, and requires you to stop moving your mouse before pressing. With the "Debug" option set to 1, you'll be able to see a _PAUSE_ icon appear.
+
+### Fix for Mouse Freeze
+
 
 ## Details
 
