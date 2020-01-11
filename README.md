@@ -43,7 +43,7 @@ Once this is done, you should be able to run the tool.
 
 This program will look for a _settings.ini_ file that contains several key pieces of information. If no settings file is found, it will use default values I've chosen. These values are:
 
-* Smooth
+* Type
 * Baseline_Sensitivity
 * Min_Sensitivity
 * Max_Sensitivity
@@ -54,7 +54,7 @@ This program will look for a _settings.ini_ file that contains several key piece
 * Visualize
 * Debug
 
-The *Smooth* value determines whether you want your generated sensitivities to be *step-like* or *smooth*. It takes on two values: **0** (step-like) or **1** (smooth). Setting Smooth = **1** will result in a sensitivity curve similar to this:
+The *Type* value determines whether you want your generated sensitivities to be *step-like* or *smooth*. It takes on two values: **0** (step-like) or **1** (smooth). Setting Type = **1** will result in a sensitivity curve similar to this:
 ![](./Source/SmoothGraph.png)
 
 whereas setting Smooth = **0** will result in something like this:
