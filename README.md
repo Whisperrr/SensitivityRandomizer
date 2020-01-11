@@ -66,7 +66,7 @@ The *Min_Sensitivity* and *Max_Sensitivity* values determine the largest and sma
 
 _Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.6**.
 
-_Smoothing_ (added in v0.3 and different to the *Smooth* value mentioned above) determines, well, how smooth you'd like your randomization to be (given that you choose a *smooth* graph rather than *step-like*). The smoothing parameter can take on several values:
+_Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomization to be (given that you choose a *smooth* graph rather than *step-like*). The smoothing parameter can take on several values:
 
 * 0: No smoothing performed (interesting option to say the least)
 * 1: Low amount of smoothing
