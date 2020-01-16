@@ -57,7 +57,7 @@ This program will look for a _settings.ini_ file that contains several key piece
 The *Type* value determines whether you want your generated sensitivities to be *step-like* or *smooth*. It takes on two values: **0** (step-like) or **1** (smooth). Setting Type = **1** will result in a sensitivity curve similar to this **and behave exactly as previous iterations of the randomizer (v0.1-v0.4)**:
 ![](./Source/SmoothGraph.png)
 
-whereas setting Smooth = **0** will result in something like this:
+whereas setting Type = **0** will result in something like this:
 ![](./Source/StepGraph.png)
 
 The *Baseline_Sensitivity* value determines determines where you'd like to vary your sensitivity multiplier around. **This should almost always be set to 1**, as this means you'll vary your sensitivity around a value *1x* your current sensitivity value (aka still your current sensitivity).
