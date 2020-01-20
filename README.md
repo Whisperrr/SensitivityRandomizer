@@ -49,7 +49,7 @@ This program will look for a _settings.ini_ file that contains several key piece
 * Max_Sensitivity
 * Spread
 * Smoothing
-* Timestep
+* Timestep (seconds)
 * Runtime (minutes)
 * Visualize
 * Debug
