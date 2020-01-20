@@ -30,7 +30,7 @@ The process is _very_ similar to Kovaak and Povohat's [InterAccel](http://mousea
 
 1) Double click the *install_driver.bat* file from the extracted ZIP file (It will ask for Admin priviledges).
 2) Install the Visual C++ Redistributable for Visual Studio 2015 from https://www.microsoft.com/en-us/download/details.aspx?id=48145 if you don't have it.
-3) Reboot. Yes, you actually need to reboot because of first step, or it won't work.
+3) **Reboot**. Yes, you actually need to reboot because of first step, or it won't work.
 
 Once this is done, you should be able to run the tool.
 
