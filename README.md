@@ -2,7 +2,7 @@
 
 **By: Whisper & El Bad**
 
-**Note** - Known issue: If you click *within* the Sensitivity Randomizer window when open, this can freeze your mouse until potentially a manual restart. A fix for this issue can be found in [4) Fix for Mouse Freeze Issue](#fix-for-mouse-freeze-issue).
+**Note** - Known issue: If you click *within* the Sensitivity Randomizer window when open, this can sometimes freeze your mouse until potentially a manual restart. A fix for this issue can be found in [4) Fix for Mouse Freeze Issue](#fix-for-mouse-freeze-issue).
 
 ## Overview
 
