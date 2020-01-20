@@ -41,7 +41,7 @@ Once this is done, you should be able to run the tool.
 
 **Note:** The program will begin to generate a complete sensitivity curve. Your mouse may initially freeze for a few seconds while generating this curve. If you want to stop randomizing your sensitivity at any time, either press **Control+C** or exit the application manually. 
 
-This program will look for a _settings.ini_ file that contains several key pieces of information that you can modify. If no settings file is found, it will use default values I've chosen. These values are:
+This program will look for a _settings.ini_ file that contains several key pieces of information that you can modify. If no settings file is found, it will use default values I've chosen. These components are:
 
 * Type
 * Baseline_Sensitivity
