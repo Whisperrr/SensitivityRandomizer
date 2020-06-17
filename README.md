@@ -28,7 +28,7 @@ Once you extract the ZIP file, you must first install Interception. More on what
 
 The process is _very_ similar to Kovaak and Povohat's [InterAccel](http://mouseaccel.blogspot.com/2015/12/new-method-for-mouse-acceleration.html), thus some of the installation code/executables are borrowed from them.
 
-1) Double click the *install_driver.bat* file from the extracted ZIP file (It will ask for Admin priviledges).
+1) Double click the *driver_install.bat* file from the extracted ZIP file (It will ask for Admin priviledges).
 2) Install the Visual C++ Redistributable for Visual Studio 2015 from https://www.microsoft.com/en-us/download/details.aspx?id=48145 if you don't have it.
 3) **Reboot**. Yes, you actually need to reboot because of first step, or it won't work.
 
