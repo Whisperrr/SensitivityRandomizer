@@ -77,7 +77,9 @@ _Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomi
 
 I have this value set to **2** by default.
 
-*Timestep* (added in v0.5) allows you to control how **often** your sensitivity changes when using the step-like sensitivity randomization option. By default, I have this set to **10**, meaning your sensitivity will change once every *ten* seconds.
+*Timestep* (added in v0.5) allows you to control how **often** your sensitivity changes when using the **step-like** sensitivity randomization option. By default, I have this set to **10**, meaning your sensitivity will change once every *ten* seconds.
+
+**Note:** If you set _Type = 1_ (generating a smooth curve), you **won't** be able to modify the timestep variable. It will be forced at a very small value (0.001) to ensure the generated sensitivity curve is actually _smooth_. To be able to modify this variable, you'll need to first have _Type = 0_ set above to specify you no longer want a smooth sensitivity curve.
 
 *Runtime (minutes)* - Determines how long you want your program to run for before you need to restart. I keep this value at **30** (for 30 minutes).
 
