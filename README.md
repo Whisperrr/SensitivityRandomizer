@@ -64,7 +64,7 @@ The *Baseline_Sensitivity* value determines determines where you'd like to vary 
 
 The *Min_Sensitivity* and *Max_Sensitivity* values determine the largest and smallest multipliers that you want your sensitivity to reach. I usually keep Min_Sensitivity = **0.50** (half your default sensitivity), and Max_Sensitivity = **2** (twice your default sensitivity).
 
-_Spread_ determines how crazy you want your curve to look. Small spread values result in small deviations around the baseline, while large spread values result in large/fast deviations. I'll be tweaking this in the future, but for now, I keep it at **0.6**.
+_Spread_ determines how fast/wide swings in sensitivities can happen. Counterintuitively, increasing the spread value will not _always_ increase how crazy your generated sensitivity curve is. Because we're attempting to create smooth curves, too much noise (no apparent patterns) will often not produce large variations around the baseline value. We'll be tweaking this in the future, but for now, I keep it at **0.6**. If you don't feel this is enough. I'd recommend actually _decreasing_ the value to, say, 0.1 to test.
 
 _Smoothing_ (added in v0.3) determines, well, how smooth you'd like your randomization to be (given that you choose a *smooth* graph rather than *step-like*). The smoothing parameter can take on several values:
 
