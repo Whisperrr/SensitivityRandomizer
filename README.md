@@ -4,6 +4,8 @@
 
 **Note** - Known issue: If you click *within* the Sensitivity Randomizer window when open, this can sometimes freeze your mouse until potentially a manual restart. A fix for this issue can be found in [4) Fix for Mouse Freeze Issue](#fix-for-mouse-freeze-issue).
 
+**Important** - Riot has been (what appears to be) randomly banning people for having this tool installed when playing Valorant. It seems to be relatively infrequent, but download at your own risk. Appeals should be quite successful though. Also you will need to uninstall to use FACEIT for CS:GO.
+
 ## Overview
 
 This tool generates smooth or step-like, randomized sensitivity multiplier curves around a baseline value using [Interception](http://www.oblita.com/interception.html) and [Armadillo](http://arma.sourceforge.net/) in C++. The goal of this tool is to begin to understand the effects of varying mouse sensitivities while aim training.
