@@ -111,5 +111,5 @@ Until a better solution can be found, I've created a [YouTube video](https://you
 ## Details
 
 If you'd like to know more about how the program actually works, please see [this Reddit post](https://www.reddit.com/r/FPSAimTrainer/comments/cve6oi/tool_for_smoothly_randomizing_sensitivity/) where I describe exactly that! If you have any issues running the program, you can:
-* Message **El Bad#0001** or **Whisper#4442** on Discord.
+* Message **El Bad#1806** or **Whisper#4442** on Discord.
 * Join the official [FPS Aim Trainer Discord](https://discordapp.com/invite/Z8hGxnM).
