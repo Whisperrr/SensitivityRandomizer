@@ -190,20 +190,27 @@ auto generateSensitivities()
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	default_random_engine generator(seed);
 
+	//Distort the number scales such that e.g. 2x faster and 2x slower sens have same probability
+	double SENS_MEAN_DISTORTED = SENS_MEAN < 1 ? -(1/SENS_MEAN) : SENS_MEAN;
+	double MIN_SENS_DISTORTED = MIN_SENS < 1 ? -(1/MIN_SENS) : MIN_SENS;
+	double MAX_SENS_DISTORTED = MAX_SENS < 1 ? -(1/MAX_SENS) : MAX_SENS;
+
 	while (running_time < RUNTIME * 60.0)
 	{
 		// Generate a normal distribution around the mean
-		lognormal_distribution<double> sens_distribution(std::log(SENS_MEAN), SENS_SPREAD);
+		lognormal_distribution<double> sens_distribution(0, SENS_SPREAD);
 
 		double random_sens = sens_distribution(generator);
 
 		// Ensure outputted sensitivities are within the bounds set by the user
-		if ((random_sens < MIN_SENS) || (random_sens > MAX_SENS))
+		if (random_sens < MIN_SENS_DISTORTED)
 		{
-			// Iterate until a sensitivity within the range is achieved
-			do {
-				random_sens = sens_distribution(generator);
-			} while ((random_sens < MIN_SENS) || (random_sens > MAX_SENS));
+			random_sens = MIN_SENS_DISTORTED - (random_sens - MIN_SENS_DISTORTED);
+			
+		}
+		if(random_sens > MAX_SENS_DISTORTED)
+		{
+			random_sens = MAX_SENS_DISTORTED - (random_sens - MAX_SENS_DISTORTED);
 		}
 
 		// Update the mean sensitivity to be the current random sensitivity
@@ -216,9 +223,7 @@ auto generateSensitivities()
 		// Ensure the timestep is some positive value
 		if (random_timestep <= 0)
 		{
-			do {
-				random_timestep = timestep_distribution(generator);
-			} while (random_timestep <= 0);
+			random_timestep = -random_timestep;
 		}
 
 		running_time += random_timestep;
@@ -226,7 +231,8 @@ auto generateSensitivities()
 
 		// Append to vectors of sensitivities and timesteps
 		x_vals.push_back(running_time);
-		y_vals.push_back(random_sens);
+		double corrected_sensitivity = random_sens < 0 ? -(1/random_sens) : random_sens;
+		y_vals.push_back(corrected_sensitivity);
 	}
 
 	auto vals = make_tuple(x_vals, y_vals);
